@@ -1,4 +1,5 @@
 #include"types.h"
+#include"gdt.h"
 
 
 void printf(char * str)
@@ -21,6 +22,7 @@ for(constructor * i=&start_ctors;i!=&end_ctors;i++){
 extern "C" void kernelMain()
 {
 printf("hello world\n");
+globalDescriptorTable gdt;
 while(1);
 }
 
