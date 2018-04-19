@@ -8,6 +8,7 @@ class globalDescriptorTable{
 
 	public:
 	class segmentDescriptor{
+
 		private:
 		uint16_t segmentLimitLow;
 		uint16_t baseAddressLow;
@@ -15,6 +16,7 @@ class globalDescriptorTable{
 		uint8_t  type;
 		uint8_t segmentLimitHigh;
 		uint8_t baseAddressMSB;
+
 		public:
 		segmentDescriptor(uint32_t base,uint32_t limit,uint8_t type);
 		uint32_t getBase();
