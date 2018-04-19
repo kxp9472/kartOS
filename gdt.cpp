@@ -1,8 +1,8 @@
 
 #include "gdt.h"
 
-globalDescriptorTable::globalDescriptorTable():codeSegmentSelector(0,64*1024*1024,0x9A),
-		      dataSegmentSelector(0,64*1024*1024,0x92),
+globalDescriptorTable::globalDescriptorTable():CodeSegmentSelector(0,64*1024*1024,0x9A),
+		      DataSegmentSelector(0,64*1024*1024,0x92),
 		      nullSegmentSelector(0,0,0),
 		      unusedSegmentSelector(0,0,0){
 
@@ -17,23 +17,23 @@ __asm volatile("lgdt (%0)"::"p"(((uint8_t*)loadPtr)+2));
 globalDescriptorTable::~globalDescriptorTable(){
 }
 
-globalDescriptorTable::uint16_t codeSegmentSelector(){
+uint16_t globalDescriptorTable::codeSegmentSelector(){
 
-return (uint8_t *)&codeSegmentSelector -(uint8_t*)this;
+return (uint8_t *)&CodeSegmentSelector -(uint8_t*)this;
 }
 
 
 
 
 
-globalDescriptorTable::uint16_t dataSegmentSelector(){
+uint16_t globalDescriptorTable::dataSegmentSelector(){
 
-return (uint8_t *)&dataSegmentSelector -(uint8_t*)this;
+return (uint8_t *)&DataSegmentSelector -(uint8_t*)this;
 }
 
 
-globalDescriptorTable::segmentDescriptor::segmentDescriptor(uint32_t abse,uint32_t limit, uint32_t type){
-<<<<<<< HEAD
+globalDescriptorTable::segmentDescriptor::segmentDescriptor(uint32_t base,uint32_t limit, uint32_t type){
+
 uint16_t *gdtEntries=(uint16_t*)this;
 uint16_t flags;
 if(limit<=65535)
@@ -59,7 +59,7 @@ gdtEntries[3]= (limit>>16)& 0x0F|(flags<<4)|((base>>24)& 0xFF)<<8;
 
 }
 
-uint32_t globalDescriptorTable::SegmentDescriptor::getBase()
+uint32_t globalDescriptorTable::segmentDescriptor::getBase()
 {
 	uint32_t result;
 	uint8_t * interRes=(uint8_t*)this;
@@ -76,7 +76,7 @@ uint32_t globalDescriptorTable::SegmentDescriptor::getBase()
 
 }
 
-uint32_t globalDescriptorTable::SegmentDescriptor::getLimit()
+uint32_t globalDescriptorTable::segmentDescriptor::getLimit()
 {
 	uint32_t result;
 	uint8_t * interRes=(uint8_t*)this;
@@ -90,14 +90,5 @@ uint32_t globalDescriptorTable::SegmentDescriptor::getLimit()
 
 
 
-
-=======
-uint16_t gdtEntries[4];
-uint16_t flags=0xC0;
-gdtEntries[0]= limit & 0xFFFF;
-gdtEntries[1]= base & 0xFFFF;
-gdtEntries[2]= (base>>16)& 0xFF|(type<<8);
-gdtEntries[3]= (limit>>16)& 0x0F|((flags)<<4)|((base>>24)& 0xFF)<<8;
->>>>>>> 5ceb75ec16463ea6815adf2f4f4948586d210ae7
 
 }
