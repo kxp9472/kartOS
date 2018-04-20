@@ -1,7 +1,7 @@
 gparameters =-m32 -mtune=i386 -fno-use-cxa-atexit -nostdlib -fno-rtti -fno-exceptions -fno-leading-underscore
 asparameters=--32
 ldparameters=-m elf_i386 
-objectfiles=loader.o gdt.o kernel.o
+objectfiles=loader.o gdt.o port.o  kernel.o
 WR=../sourceDir/installDir/bin/i686-elf-g++
 
 %.o:%.cpp
@@ -30,3 +30,6 @@ kartKernel.iso:kartKernel.bin
 run: kartKernel.iso
 	(killall VirtualBox && sleep 1)|| true
 	VirtualBox --startvm "kartOS" &
+.PHONY:clean
+clean:
+	rm -f $(objects) kartKernel.bin kartKernel.iso
