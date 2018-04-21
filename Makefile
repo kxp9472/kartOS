@@ -1,7 +1,7 @@
 gparameters =-m32 -mtune=i386 -fno-use-cxa-atexit -nostdlib -fno-rtti -fno-exceptions -fno-leading-underscore
 asparameters=--32
 ldparameters=-m elf_i386 
-objectfiles=loader.o gdt.o port.o  kernel.o
+objectfiles=loader.o gdt.o   kernel.o
 WR=../sourceDir/installDir/bin/i686-elf-g++
 
 %.o:%.cpp
@@ -12,6 +12,7 @@ WR=../sourceDir/installDir/bin/i686-elf-g++
 kartKernel.bin:linker.ld $(objectfiles)
 	ld $(ldparameters) -T $< -o $@ $(objectfiles)
 install: kartKernel.bin
+	sudo rm  /boot/kartKernel.bin
 	sudo cp kartKernel.bin /boot/kartKernel.bin
 kartKernel.iso:kartKernel.bin
 	mkdir iso
