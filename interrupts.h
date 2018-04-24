@@ -2,10 +2,12 @@
 #define __INTERRUPTS_H
 
 #include"types.h"
-
+#include"gdt.h"
 class interruptManager{
-	interruptManager();
+	public:
+	interruptManager(globalDescriptorTable * gdtPtr);
 	~interruptManager();
+	protected:
 	struct gateDescriptor{
 		uint16_t handlerLower;
 		uint16_t codeSegment;
@@ -17,10 +19,13 @@ class interruptManager{
 
 
 	}__attribute__((packed));
-	gateDescriptor intDescTable[256];
+	static gateDescriptor intDescTable[256];
+	public:	
 	void globalActivate();
 	void globalDeactivate();
-	void initIntDescTable(uint8_t intNum,void (*handler)(),uint16_t codeSegmentOffset,uint8_t 		descriptorType,uint8_t descriptorPrivilegeLevel);
+	protected:
+	void initIntDescTable(uint8_t intNum,void (*handler)(),uint16_t codeSegmentOffset,uint8_t 		descriptorType,uint8_t descriptorPrivilegeLevel,uint8_t present);
+	
 	};
 
 
